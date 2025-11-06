@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <h2>¡Reclamos Similares Encontrados!</h2>
+            <hr>
+            
+            <h4>Tu reclamo (pendiente de crear):</h4>
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    {{ contenido_nuevo }}
+                </div>
+            </div>
+
+            <p>Hemos encontrado los siguientes reclamos pendientes que podrían ser el mismo problema. Puedes adherirte a uno de ellos (recomendado) o crear tu reclamo como uno nuevo.</p>
+
+            <h4 class="mt-4">Reclamos Similares Pendientes:</h4>
+            <div class="list-group mb-4">
+                {% for reclamo in reclamos_similares %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <b>ID: {{ reclamo.id_reclamo }}</b> ({{ reclamo.numero_adherentes }} adherentes)
+                            <p class="mb-1 fst-italic">"{{ reclamo.contenido|truncate(150) }}"</p>
+                        </div>
+                        <form action="{{ url_for('adherir_reclamo', id_reclamo=reclamo.id_reclamo) }}" method="POST">
+                             <button type="submit" class="btn btn-sm btn-success">Adherirme</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <hr>
+            <h4>¿Crear de todas formas?</h4>
+            <p>Si ninguno de estos es tu problema, puedes crear tu reclamo como uno nuevo.</p>
+            
+            <form action="{{ url_for('crear_reclamo_confirmado') }}" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-primary btn-lg">Crear mi reclamo como nuevo</button>
+            </form>
+            
+            <a href="{{ url_for('crear_reclamo') }}" class="btn btn-secondary btn-lg">Cancelar</a>
+
+        </div>
+    </div>
+{% endblock %}

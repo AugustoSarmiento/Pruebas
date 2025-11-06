@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <h2>Reclamos Pendientes en el Sistema</h2>
+            <p>Aquí puedes ver todos los reclamos que están pendientes de resolución. Puedes adherirte a cualquiera de ellos.</p>
+
+            <div class="mb-3">
+                <strong>Filtrar por departamento:</strong>
+                <a href="{{ url_for('listar_reclamos') }}" class="btn btn-sm btn-{{ 'primary' if not filtro_actual else 'outline-secondary' }}">
+                    Todos
+                </a>
+                {% for depto in departamentos %}
+                    <a href="{{ url_for('listar_reclamos', departamento=depto) }}" class="btn btn-sm btn-{{ 'primary' if filtro_actual == depto else 'outline-secondary' }}">
+                        {{ depto.title() }}
+                    </a>
+                {% endfor %}
+            </div>
+            <hr>
+
+            <div class="list-group">
+            {% if reclamos %}
+                {% for reclamo in reclamos %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="badge bg-info text-dark">{{ reclamo.departamento.title() }}</span>
+                            <h5 class="mb-1">ID: {{ reclamo.id_reclamo }} - Creado por: {{ reclamo.usuario_creador.nombre_usuario }}</h5>
+                            <p class="mb-1 fst-italic">"{{ reclamo.contenido }}"</p>
+                            <small>Fecha: {{ reclamo.timestamp.strftime('%Y-%m-%d') }} - Adherentes: {{ reclamo.numero_adherentes }}</small>
+                        </div>
+                        <form action="{{ url_for('adherir_reclamo', id_reclamo=reclamo.id_reclamo) }}" method="POST">
+                             <button type="submit" class="btn btn-success">Adherirme</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-warning" role="alert">
+                    No se encontraron reclamos pendientes{% if filtro_actual %} para el departamento <b>{{ filtro_actual }}</b>{% endif %}.
+                </div>
+            {% endif %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

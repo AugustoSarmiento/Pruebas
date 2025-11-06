@@ -1,0 +1,13 @@
+sqlalchemy
+nltk
+numpy
+scikit-learn
+pandas
+spacy
+fpdf2
+Flask
+Flask-Session
+flask-wtf
+flask-bootstrap
+flask-login
+email_validator

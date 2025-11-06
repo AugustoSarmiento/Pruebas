@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <h2>¡Reclamos Similares Encontrados!</h2>
+            <p>Tu reclamo (<b>"{{ contenido_nuevo[:80] }}..."</b>) ha sido clasificado y hemos encontrado otros reclamos pendientes parecidos:</p>
+            <hr>
+            
+            <h4>Reclamos Similares Pendientes:</h4>
+            <div class="list-group mb-4">
+                {% for reclamo in reclamos_similares %}
+                    <div class="list-group-item">
+                        <b>ID: {{ reclamo.id_reclamo }}</b> ({{ reclamo.numero_adherentes }} adherentes)
+                        <p class="mb-1">{{ reclamo.contenido }}</p>
+                        <a href="#" class="btn btn-sm btn-success disabled">Adherirme a este reclamo (Próximamente)</a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <hr>
+            <h4>¿Qué deseas hacer?</h4>
+            <p>Puedes adherirte a uno de los reclamos de la lista o, si ninguno coincide, crear el tuyo como uno nuevo.</p>
+            
+            <a href="#" class="btn btn-primary btn-lg disabled">Crear mi reclamo como nuevo (Próximamente)</a>
+            <a href="{{ url_for('crear_reclamo') }}" class="btn btn-secondary btn-lg">Cancelar y volver</a>
+
+        </div>
+    </div>
+{% endblock %}

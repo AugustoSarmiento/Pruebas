@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2>Crear un Nuevo Reclamo</h2>
+            <p>Escriba el detalle de su problema. El sistema intentará clasificarlo y buscará reclamos similares pendientes.</p>
+            <hr>
+            {{ wtf.quick_form(form, novalidate=True, button_map={'submit': 'primary'}) }}
+        </div>
+    </div>
+{% endblock %}
