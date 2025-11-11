@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <h2>Mis Reclamos</h2>
+            <p>Aquí puedes ver todos los reclamos que has creado y su estado actual.</p>
+            <hr>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category if category else 'info' }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div class="list-group">
+            {% if reclamos %}
+                {% for reclamo in reclamos %}
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">ID: {{ reclamo.id_reclamo }} - {{ reclamo.departamento.title() }}</h5>
+
+                            {% if reclamo.estado == 'pendiente' %}
+                                <span class="badge bg-warning text-dark">{{ reclamo.estado }}</span>
+                            {% elif reclamo.estado == 'en proceso' %}
+                                <span class="badge bg-info text-dark">{{ reclamo.estado }}</span>
+                            {% elif reclamo.estado == 'resuelto' %}
+                                <span class="badge bg-success">{{ reclamo.estado }}</span>
+                            {% else %}
+                                <span class="badge bg-danger">{{ reclamo.estado }}</span>
+                            {% endif %}
+                        </div>
+                        <p class="mb-1 fst-italic">"{{ reclamo.contenido }}"</p>
+                        <small>Fecha: {{ reclamo.timestamp.strftime('%Y-%m-%d') }} - Adherentes: {{ reclamo.numero_adherentes }}</small>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-info" role="alert">
+                    Aún no has creado ningún reclamo.
+                </div>
+            {% endif %}
+            </div>
+
+            <a href="{{ url_for('panel_principal') }}" class="btn btn-secondary mt-3">Volver al Panel</a>
+
+        </div>
+    </div>
+{% endblock %}

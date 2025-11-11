@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Guía de Uso del Panel de Administración</h2>
+
+    <div id="accordion">
+
+        <!-- Sección 1 -->
+        <div class="card mb-2 shadow-sm">
+            <div class="card-header bg-primary text-white" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link text-white" data-toggle="collapse" data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne">
+                        <strong>1. Manejar Reclamos</strong>
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    Esta es la pantalla principal. Aquí puede ver todos los reclamos que le corresponden (filtrados por su departamento si es Jefe, o todos si es Secretario Técnico).
+                    <ul>
+                        <li><b>Editar Estado:</b> Le permite cambiar el estado de un reclamo. Si lo cambia a <em>En Proceso</em>, <strong>debe</strong> asignar un tiempo de resolución en días (1-15).</li>
+                        <li><b>Derivar (Solo Secretaría Técnica):</b> Le permite reasignar un reclamo al departamento correcto si el clasificador cometió un error o si el reclamo no corresponde a "Secretaría Técnica".</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección 2 -->
+        <div class="card mb-2 shadow-sm">
+            <div class="card-header bg-success text-white" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn btn-link text-white collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                            aria-expanded="false" aria-controls="collapseTwo">
+                        <strong>2. Ver Analítica</strong>
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    Esta página muestra estadísticas clave de los reclamos de su área:
+                    <ul>
+                        <li><b>Estado de Reclamos:</b> Porcentaje de reclamos Pendientes, En Proceso y Resueltos.</li>
+                        <li><b>Mediana de Tiempos:</b> Tiempo promedio (mediana) de resolución.</li>
+                        <li><b>Palabras Clave:</b> Las 15 palabras más comunes en los reclamos (se excluyen artículos y conectores).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección 3 -->
+        <div class="card mb-2 shadow-sm">
+            <div class="card-header bg-info text-white" id="headingThree">
+                <h5 class="mb-0">
+                    <button class="btn btn-link text-white collapsed" data-toggle="collapse" data-target="#collapseThree"
+                            aria-expanded="false" aria-controls="collapseThree">
+                        <strong>3. Generar Reportes</strong>
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    Esta función le permite descargar un reporte completo con estadísticas y reclamos detallados,
+                    en formato <b>HTML</b> o <b>PDF</b>, para archivo o envío institucional.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('panel_principal') }}" class="btn btn-secondary">Volver al Panel</a>
+    </div>
+</div>
+{% endblock %}

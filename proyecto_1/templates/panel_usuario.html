@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category if category else 'info' }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <h2>Panel Principal</h2>
+    <hr>
+    <p>¡Hola, <strong>{{ usuario.nombre_usuario }}</strong>!</p>
+    
+    {% if usuario.rol == 'usuario' %}
+        <h4>Panel de Usuario</h4>
+        <p>Desde aquí puedes gestionar tus reclamos y ver el estado de los reclamos de la facultad.</p>
+        <div class="list-group">
+            <a href="{{ url_for('crear_reclamo') }}" class="list-group-item list-group-item-action">
+                Crear Reclamo Nuevo
+            </a>
+            <a href="{{ url_for('listar_reclamos') }}" class="list-group-item list-group-item-action">
+                Listar Reclamos Pendientes (Todos)
+            </a>
+            <a href="{{ url_for('mis_reclamos') }}" class="list-group-item list-group-item-action">
+                Ver Mis Reclamos
+            </a>
+        </div>
+    
+    {% elif usuario.rol == 'jefe' or usuario.rol == 'secretario' %}
+        
+        <h4>Panel de Administración</h4>
+        
+        {% if usuario.rol == 'jefe' %}
+            <p>Panel de Jefe de Departamento: <strong>{{ usuario.departamento.title() }}</strong></p>
+        {% else %}
+            <p>Panel de Secretaría Técnica</p>
+        {% endif %}
+
+        <div class="list-group">
+            <a href="{{ url_for('manejar_reclamos') }}" class="list-group-item list-group-item-action">
+                1. Manejar Reclamos
+            </a>
+            <a href="{{ url_for('analitica') }}" class="list-group-item list-group-item-action">
+                2. Ver Analítica 
+            </a>
+            <div class="list-group-item">
+                3. Generar Reportes:
+                <a href="{{ url_for('generar_reporte', formato='html') }}" class="btn btn-info btn-sm ms-2">
+                    Descargar HTML
+                </a>
+                <a href="{{ url_for('generar_reporte', formato='pdf') }}" class="btn btn-danger btn-sm ms-2">
+                    Descargar PDF
+                </a>
+            </div>
+            
+            <a href="{{ url_for('ayuda') }}" class="list-group-item list-group-item-action">
+                4. Ayuda 
+            </a>
+        </div>
+
+    {% endif %}
+    
+{% endblock %}

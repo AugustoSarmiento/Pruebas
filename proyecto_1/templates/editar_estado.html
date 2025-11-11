@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block page_content %}
+    <h2>Editar Estado del Reclamo #{{ reclamo.id_reclamo }}</h2>
+    <hr>
+
+    <div class="card bg-light mb-3">
+        <div class="card-header"><b>Detalles del Reclamo</b></div>
+        <div class="card-body">
+            <p><b>Creador:</b> {{ reclamo.usuario_creador.nombre_usuario }}</p>
+            <p><b>Departamento Actual:</b> {{ reclamo.departamento.title() }}</p>
+            <p><b>Contenido:</b></p>
+            <blockquote class="blockquote">
+                <p class="mb-0 fst-italic">"{{ reclamo.contenido }}"</p>
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Cambiar Estado</h4>
+            {{ wtf.quick_form(form, novalidate=True, button_map={'submit': 'primary'}) }}
+        </div>
+    </div>
+
+    <a href="{{ url_for('manejar_reclamos') }}" class="btn btn-secondary mt-3">Cancelar y Volver</a>
+{% endblock %}
