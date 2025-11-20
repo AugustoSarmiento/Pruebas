@@ -8,7 +8,7 @@ from modules.modelos_db import ModeloUsuario, ModeloReclamo # Necesario para fil
 from typing import Optional, List # Mantenemos Optional y List
 from modules.clasificador_reclamos import ClasificadorReclamo
 
-
+ #TODO: Actualizar nombre de la clase
 class SistemaGestionReclamos:
     def __init__(self, repo_usuarios: RepositorioAbstracto, repo_reclamos: RepositorioAbstracto):
         """
@@ -153,9 +153,6 @@ class SistemaGestionReclamos:
         reclamos_del_usuario = self.__repo_reclamos.obtener_todos_por_filtro(id_usuario_creador=modelo_usuario.id)
         return reclamos_del_usuario
     
-    # modules/sistema.py
-
-    # ... (después de tus otros métodos, como crear_reclamo) ...
 
     def buscar_reclamos_pendientes_todos(self) -> List[Reclamo]:
         """

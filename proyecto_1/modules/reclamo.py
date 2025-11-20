@@ -74,5 +74,5 @@ class Reclamo:
                 else:
                     # Lanza un error si el estado es 'en proceso' pero los días no son válidos.
                     raise ValueError("Se debe asignar un tiempo de resolución válido (1-15 días).")
-
-    
+        else:
+            raise ValueError(f"El estado '{nuevo_estado}' no es un estado válido")
